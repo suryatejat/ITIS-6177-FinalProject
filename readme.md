@@ -1,3 +1,5 @@
+---
+
 # **Azure AI Translator API Documentation**
 
 This documentation provides detailed information on how to set up, run, and use the REST API that leverages Azure AI Translator for translation, transliteration, language detection, and more.
@@ -46,6 +48,7 @@ This documentation provides detailed information on how to set up, run, and use 
 
 ### **1. POST `/translate`**
 - **Purpose:** Translates text from one language to another.
+- **Description:** Accepts input text and translates it into the specified target language. Optionally, a source language can be specified.
 - **Request Body:**
   ```json
   {
@@ -60,14 +63,12 @@ This documentation provides detailed information on how to set up, run, and use 
     "translatedText": "Bonjour"
   }
   ```
-- **Error Cases:**
-  - `400`: Validation errors, e.g., missing `text` or invalid language codes.
-  - `500`: Issues with the Azure Translator API.
 
 ---
 
 ### **2. POST `/detect`**
 - **Purpose:** Detects the language of a given text.
+- **Description:** Analyzes input text and identifies its language.
 - **Request Body:**
   ```json
   {
@@ -80,18 +81,16 @@ This documentation provides detailed information on how to set up, run, and use 
     "detectedLanguage": "es"
   }
   ```
-- **Error Cases:**
-  - `400`: Missing `text` in the request.
-  - `500`: Issues with the Azure Translator API.
 
 ---
 
 ### **3. GET `/languages/:name?`**
 - **Purpose:** Retrieves a list of supported languages or a specific language's name by code.
-- **Parameters:** 
-  - `name` (optional): Language code to retrieve the name of the language.
-- **Response:**
-  - **Without `name`:**
+- **Description:** Fetches all supported languages by the Translator service. Optionally, you can specify a language code to retrieve its name.
+- **Request Parameter:** 
+  - `name` (optional): Language code to get its name.
+- **Responses:**
+  - Without `name`:
     ```json
     {
       "en": "English",
@@ -99,36 +98,32 @@ This documentation provides detailed information on how to set up, run, and use 
       ...
     }
     ```
-  - **With `name` (e.g., `/languages/fr`):**
+  - With `name` (e.g., `/languages/fr`):
     ```json
     {
       "Language Name": "French"
     }
     ```
-- **Error Cases:**
-  - `500`: Issues with the Azure Translator API.
 
 ---
 
 ### **4. GET `/languageCode/:name`**
 - **Purpose:** Retrieves the language code for a given language name.
-- **Parameters:**
-  - `name` (required): Language name in English or its native form.
+- **Description:** Searches the list of supported languages for the code corresponding to the specified language name.
+- **Request Parameter:** 
+  - `name` (required): Language name in English or native form.
 - **Response (e.g., `/languageCode/french`):**
   ```json
   {
     "languageCode": "fr"
   }
   ```
-- **Error Cases:**
-  - `400`: Missing `name` parameter.
-  - `404`: Language not found.
-  - `500`: Issues with the Azure Translator API.
 
 ---
 
 ### **5. POST `/transliterate`**
 - **Purpose:** Transliterates text between scripts.
+- **Description:** Converts text from one script to another within the same language (e.g., Japanese Kanji to Romaji).
 - **Request Body:**
   ```json
   {
@@ -144,14 +139,12 @@ This documentation provides detailed information on how to set up, run, and use 
     "transliteratedText": "konnichiwa"
   }
   ```
-- **Error Cases:**
-  - `400`: Validation errors, e.g., missing required fields.
-  - `500`: Issues with the Azure Translator API.
 
 ---
 
 ### **6. POST `/breaksentence`**
 - **Purpose:** Breaks text into sentences or phrases.
+- **Description:** Analyzes text and splits it into sentence or phrase boundaries.
 - **Request Body:**
   ```json
   {
@@ -162,17 +155,15 @@ This documentation provides detailed information on how to set up, run, and use 
 - **Response:**
   ```json
   {
-    "sentences": [12, 13]
+    "sentences": [12, 13] // Length of sentences in characters
   }
   ```
-- **Error Cases:**
-  - `400`: Missing `text` or invalid `language` field.
-  - `500`: Issues with the Azure Translator API.
 
 ---
 
 ### **7. POST `/dictionarylookup`**
 - **Purpose:** Looks up dictionary entries for a word.
+- **Description:** Fetches dictionary-style translations and details for the input text in the specified language.
 - **Request Body:**
   ```json
   {
@@ -192,15 +183,12 @@ This documentation provides detailed information on how to set up, run, and use 
     ]
   }
   ```
-- **Error Cases:**
-  - `400`: Validation errors, e.g., missing required fields.
-  - `500`: Issues with the Azure Translator API.
 
 ---
 
-### **9. Error Handling**
-- **Validation Errors (400):**
-  Returned when required parameters are missing or invalid:
+### **8. Error Handling**
+- **Validation Errors (400):**  
+  - Missing or invalid parameters.
   ```json
   {
     "errors": [
@@ -212,8 +200,8 @@ This documentation provides detailed information on how to set up, run, and use 
     ]
   }
   ```
-- **Server Errors (500):**
-  Issues with Azure Translator service or misconfiguration:
+- **Server Errors (500):**  
+  - Issues with Azure Translator service or misconfiguration.
   ```json
   {
     "error": "Invalid subscription key"
@@ -237,6 +225,5 @@ This documentation provides detailed information on how to set up, run, and use 
 ## **Security Considerations**
 - Never expose your `.env` file or API key.
 - Use environment variables to store sensitive credentials.
-- Consider using HTTPS in production environments.
 
 --- 
