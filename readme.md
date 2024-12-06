@@ -38,7 +38,7 @@ This documentation provides detailed information on how to set up, run, and use 
 
 3. **Run the Server:**
    ```bash
-   node app.js
+   node translator.js
    ```
    The server will run on the specified port (default is `3000`).
 
