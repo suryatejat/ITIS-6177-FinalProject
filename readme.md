@@ -27,8 +27,8 @@ This documentation provides detailed information on how to set up, run, and use 
 
 1. **Clone the Repository:**
    ```bash
-   git clone <repository_url>
-   cd <repository_folder>
+   git clone https://github.com/suryatejat/ITIS-6177-FinalProject.git
+   cd ITIS-6177-FinalProject
    ```
 
 2. **Install Dependencies:**
