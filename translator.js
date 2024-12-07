@@ -262,7 +262,15 @@ app.post('/dictionarylookup', [
 
 // Retrieving all the Invalid routes
 app.use((req, res) => {
-    res.status(404).json({ error: "Invalid route"});
+    res.status(404).json({
+        error: "Invalid route",
+        message: "The resource you are looking for does not exist. Please check the API documentation.",
+        suggestions: [
+            { method: "POST", endpoint: "/translate" },
+            { method: "POST", endpoint: "/detect" },
+            { method: "GET", endpoint: "/languages" }
+        ]
+    });
 });
 
 // Start the server on the specified port
